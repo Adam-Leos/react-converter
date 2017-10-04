@@ -1,0 +1,17 @@
+.header {
+  padding: 20px;
+  text-align: center;
+  &__link {
+    display: inline-block;
+    padding: 5px 15px;
+    font-size: 24px;
+    color: #937b00;
+    text-transform: uppercase;
+    border-left: 2px solid #b5c9ff;
+    border-right: 2px solid #b5c9ff;
+  }
+}
+.main,
+.footer {
+  padding: 20px;
+}

@@ -1,0 +1,62 @@
+.converter {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 auto 50px;
+  padding: 50px;
+  color: #fff;
+  font-family: Helvetica, Verdana, sans-serif;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 3, 95, 1) 0%,
+    rgba(125, 185, 232, 0) 100%
+  );
+  border-radius: 300px 60px 300px 60px;
+  &__box {
+    flex-basis: 100%;
+    margin-bottom: 20px;
+    text-align: center;
+    position: relative; /* for currency select */
+  }
+  &__input {
+    padding: 5px;
+    font-size: 18px;
+    border: 1px solid #ccc;
+    height: 24px;
+  }
+  &__span {
+    display: inline-block;
+    width: 100px;
+    font-size: 22px;
+  }
+  &__select {
+    width: 65px;
+    height: 36px;
+    background: #fff;
+    border: 1px solid #ccc;
+    vertical-align: top;
+    font-size: 16px;
+  }
+  &__button {
+    margin: 0 auto;
+    padding: 10px 30px;
+    font-size: 20px;
+    background: linear-gradient(
+      135deg,
+      #7595f0 0%,
+      #09081c 100%
+    );
+    border: none;
+    border-radius: 10px 50px 10px 50px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    transition: opacity 300ms;
+    &:hover {
+      opacity: .9;
+    }
+  }
+}
+
+/* responsive */
+@import 'converter-responsive';
