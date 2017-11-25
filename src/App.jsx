@@ -25,20 +25,20 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(actionCreators, dispatch);
 }
 
-const Adam = props => (
+const Converter = props => (
   <div>
     <Route exact path="/" render={() => <Main {...props} />} />
     <Route path="/contacts" component={Contacts} />
   </div>
 );
 
-const ConnectedAdam = withRouter(connect(mapStateToProps, mapDispatchToProps)(Adam));
+const ConnectedConverter = withRouter(connect(mapStateToProps, mapDispatchToProps)(Converter));
 
 function App() {
   return (
     <Provider store={store}>
       <Router history={createBrowserHistory()}>
-        <ConnectedAdam />
+        <ConnectedConverter />
       </Router>
     </Provider>
   );
