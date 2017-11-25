@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './ratio-widget.scss';
 import RatioPanelOption from './RatioPanelOption.jsx';
 import RatioWidgetRow from './RatioWidgetRow.jsx';
@@ -6,25 +7,12 @@ import GetCurrencyRatio from '../../utils/GetCurrencyRatio';
 
 // TODO use templates for html
 class RatioWidget extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      isPanelOpen: false,
-      widgetCurrency: 'USD',
-      currenciesCollection: ['EUR', 'RUB', 'GBP', 'JPY'],
-      ratioPanelCurrencies: ['EUR', 'RUB', 'GBP', 'JPY'],
-    };
-  }
-
   onRatioCheckboxChange = (event) => {
     this.toggleRatioVisibility(event.target);
   }
 
   toggleRatioPanel = () => {
-    this.setState({
-      isPanelOpen: !this.state.isPanelOpen,
-    });
+    this.props.toggleRatioPanel();
   }
 
   // TODO just remove unneeded currency, not create new array
@@ -33,12 +21,18 @@ class RatioWidget extends React.Component {
     const newCurrenciesArray = [];
 
     ratioCheckboxes.forEach(ratioCheckbox => newCurrenciesArray.push(ratioCheckbox.value));
-    this.setState({
-      currenciesCollection: newCurrenciesArray,
-    });
+
+    this.props.changeCurrencyCollection(newCurrenciesArray);
   }
 
   render() {
+    const {
+      isPanelOpen,
+      widgetCurrency,
+      currenciesCollection,
+      ratioPanelCurrencies,
+    } = this.props.ratioWidget;
+
     return (
       <div className="ratio-widget">
         <table className="ratio-widget__table">
@@ -47,20 +41,20 @@ class RatioWidget extends React.Component {
               <th colSpan="2" className="ratio-widget__data ratio-widget__data--head">
                 Current ratio of &nbsp;
                 <span className="j-ratio-widget-currency">USD</span>
-                <span role="button" tabIndex={0} className={`ratio-widget__arrow j-toggle-ratio-panel ${this.state.isPanelOpen ? 'active' : ''}`} onClick={this.toggleRatioPanel} />
+                <span role="button" tabIndex={0} className={`ratio-widget__arrow j-toggle-ratio-panel ${isPanelOpen ? 'active' : ''}`} onClick={this.toggleRatioPanel} />
               </th>
             </tr>
           </thead>
           <tbody className="ratio-widget__body j-ratio-widget-body">
-            {this.state.currenciesCollection.map((currency, index) => {
-              const currencyRatio = GetCurrencyRatio(this.state.widgetCurrency);
+            {currenciesCollection.map((currency, index) => {
+              const currencyRatio = GetCurrencyRatio(widgetCurrency);
               const upperCaseCurrency = currency.toUpperCase();
 
               return (
                 <RatioWidgetRow
                   upperCaseCurrency={upperCaseCurrency}
                   currencyRatio={currencyRatio}
-                  key={index}
+                  key={upperCaseCurrency}
                 />
               );
             })}
@@ -73,15 +67,15 @@ class RatioWidget extends React.Component {
             </tr>
           </tfoot>
         </table>
-        <div className={`ratio-widget__panel j-ratio-panel ${this.state.isPanelOpen ? 'active' : ''}`}>
-          {this.state.ratioPanelCurrencies.map((currency, index) => {
+        <div className={`ratio-widget__panel j-ratio-panel ${isPanelOpen ? 'active' : ''}`}>
+          {ratioPanelCurrencies.map((currency, index) => {
             const upperCaseCurrency = currency.toUpperCase();
 
             return (
               <RatioPanelOption
                 upperCaseCurrency={upperCaseCurrency}
                 onChange={this.onRatioCheckboxChange}
-                key={index}
+                key={upperCaseCurrency}
               />
             );
           })}
@@ -90,5 +84,16 @@ class RatioWidget extends React.Component {
     );
   }
 }
+
+RatioWidget.propTypes = {
+  ratioWidget: PropTypes.shape({
+    isPanelOpen: PropTypes.bool.isRequired,
+    widgetCurrency: PropTypes.string.isRequired,
+    currenciesCollection: PropTypes.arrayOf(PropTypes.string).isRequired,
+    ratioPanelCurrencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  }).isRequired,
+  toggleRatioPanel: PropTypes.func.isRequired,
+  changeCurrencyCollection: PropTypes.func.isRequired,
+};
 
 export default RatioWidget;

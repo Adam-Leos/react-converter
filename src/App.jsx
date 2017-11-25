@@ -1,25 +1,50 @@
 import 'reset-css';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
 import {
-  BrowserRouter as Router,
+  Router,
   Route,
 } from 'react-router-dom';
+import { withRouter } from 'react-router';
+import { createBrowserHistory } from 'history';
+import { Provider, connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import store from './store';
+import * as actionCreators from './actions/actionCreators';
 import Main from './views/main/Main.jsx';
 import Contacts from './views/contacts/Contacts.jsx';
 import './components/layout/layout.scss';
 
+function mapStateToProps(state) {
+  return {
+    ratioWidget: state.ratioWidget,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(actionCreators, dispatch);
+}
+
+const Adam = props => (
+  <div>
+    <Route exact path="/" render={() => <Main {...props} />} />
+    <Route path="/contacts" component={Contacts} />
+  </div>
+);
+
+const ConnectedAdam = withRouter(connect(mapStateToProps, mapDispatchToProps)(Adam));
+
 function App() {
   return (
-    <Router>
-      <div>
-        <Route exact path="/" component={Main} />
-        <Route path="/contacts" component={Contacts} />
-      </div>
-    </Router>
+    <Provider store={store}>
+      <Router history={createBrowserHistory()}>
+        <ConnectedAdam />
+      </Router>
+    </Provider>
   );
 }
 
-ReactDOM.render((
-  <App />
-), document.getElementById('app-root'));
+render(
+  <App />,
+  document.getElementById('app-root'),
+);

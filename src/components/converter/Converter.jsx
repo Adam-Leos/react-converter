@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './converter.scss';
 import ConverterFeild from './ConverterField.jsx';
 import GetCurrencyRatio from '../../utils/GetCurrencyRatio';
@@ -73,5 +74,9 @@ class Converter extends React.Component {
     );
   }
 }
+
+Converter.propTypes = {
+  isConverterWithWidget: PropTypes.bool.isRequired,
+};
 
 export default Converter;
