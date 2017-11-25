@@ -5,12 +5,9 @@ import ConverterFeild from './ConverterField.jsx';
 import GetCurrencyRatio from '../../utils/GetCurrencyRatio';
 
 class Converter extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   onConvertCurrencyClick = () => {
     this.exchangeCurrency();
+
     if (this.props.isConverterWithWidget) {
       this.changeRatioWidgetCurrency();
     }
@@ -18,25 +15,15 @@ class Converter extends React.Component {
 
   changeRatioWidgetCurrency = () => {
     const currencyFrom = document.querySelector('.j-currency-from').value.toUpperCase();
-    const ratioWidgetCurrency = document.querySelector('.j-ratio-widget-currency');
-    const ratioWidgetCurrencyValue = ratioWidgetCurrency.innerHTML.toUpperCase();
+    const ratioWidgetCurrencyValue = document.querySelector('.j-ratio-widget-currency').innerHTML.toUpperCase();
 
     if (currencyFrom === ratioWidgetCurrencyValue) {
       return false;
     }
 
-    const ratioWidgetRows = document.querySelectorAll('.j-ratio-currency-row');
-    const currenciesToShow = [ratioWidgetCurrencyValue];
-
-    ratioWidgetRows.forEach((row) => {
-      if (row.dataset.currency !== currencyFrom) {
-        const upperCaseCurrency = row.dataset.currency.toUpperCase();
-        currenciesToShow.push(upperCaseCurrency);
-      }
-    });
-
-    ratioWidgetCurrency.innerHTML = currencyFrom;
-    // RatioWidget.fillRatioWidget(currencyFrom, currenciesToShow);
+    this.props.changeRatioTableCurrencies(currencyFrom, ratioWidgetCurrencyValue);
+    this.props.changeRatioPanelCurrencies(currencyFrom, ratioWidgetCurrencyValue);
+    this.props.changeWidgetHeadCurrency(currencyFrom);
   }
 
   // TODO value validation
@@ -69,7 +56,13 @@ class Converter extends React.Component {
       <div className="converter">
         <ConverterFeild type="entered" />
         <ConverterFeild type="calculated" />
-        <button type="button" className="converter__button j-convert-currency" onClick={this.onConvertCurrencyClick}>Convert</button>
+        <button
+          type="button"
+          className="converter__button j-convert-currency"
+          onClick={this.onConvertCurrencyClick}
+        >
+          Convert
+        </button>
       </div>
     );
   }
@@ -77,6 +70,9 @@ class Converter extends React.Component {
 
 Converter.propTypes = {
   isConverterWithWidget: PropTypes.bool.isRequired,
+  changeRatioTableCurrencies: PropTypes.func.isRequired,
+  changeWidgetHeadCurrency: PropTypes.func.isRequired,
+  changeRatioPanelCurrencies: PropTypes.func.isRequired,
 };
 
 export default Converter;

@@ -4,16 +4,25 @@ export function toggleRatioPanel() {
   };
 }
 
-export function changeWidgetCurrency(newCurrency) {
+export function changeWidgetHeadCurrency(newWidgetCurrency) {
   return {
-    type: 'CHANGE_WIDGET_CURRENCY',
-    newCurrency,
+    type: 'CHANGE_WIDGET_HEAD_CURRENCY',
+    newWidgetCurrency,
   };
 }
 
-export function changeCurrencyCollection(newCurrencyArray) {
+export function changeRatioTableCurrencies(currencyToRemove, currencyToAdd) {
   return {
-    type: 'CHANGE_CURRENCY_COLLECTION',
-    newCurrencyArray,
+    type: 'CHANGE_RATIO_TABLE_CURRENCIES',
+    currencyToRemove,
+    currencyToAdd,
+  };
+}
+
+export function changeRatioPanelCurrencies(currencyToRemove, currencyToAdd) {
+  return {
+    type: 'CHANGE_RATIO_PANEL_CURRENCIES',
+    currencyToRemove,
+    currencyToAdd,
   };
 }

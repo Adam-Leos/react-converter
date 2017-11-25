@@ -12,14 +12,19 @@ const Main = props => (
       <Link className="header__link" to="/contacts">to contacts</Link>
     </header>
     <main className="main">
-      <Converter isConverterWithWidget />
+      <Converter
+        isConverterWithWidget
+        changeRatioTableCurrencies={props.changeRatioTableCurrencies}
+        changeRatioPanelCurrencies={props.changeRatioPanelCurrencies}
+        changeWidgetHeadCurrency={props.changeWidgetHeadCurrency}
+      />
     </main>
     <footer className="footer">
       <div className="footer__ratio-widget">
         <RatioWidget
           ratioWidget={props.ratioWidget}
           toggleRatioPanel={props.toggleRatioPanel}
-          changeCurrencyCollection={props.changeCurrencyCollection}
+          changeRatioTableCurrencies={props.changeRatioTableCurrencies}
         />
       </div>
     </footer>
@@ -29,12 +34,14 @@ const Main = props => (
 Main.propTypes = {
   ratioWidget: PropTypes.shape({
     isPanelOpen: PropTypes.bool.isRequired,
-    widgetCurrency: PropTypes.string.isRequired,
-    currenciesCollection: PropTypes.arrayOf(PropTypes.string).isRequired,
-    ratioPanelCurrencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+    ratioWidgetHeadCurrency: PropTypes.string.isRequired,
+    ratioTableCurrenciesCollection: PropTypes.arrayOf(PropTypes.string).isRequired,
+    ratioPanelCurrenciesCollection: PropTypes.arrayOf(PropTypes.string).isRequired,
   }).isRequired,
   toggleRatioPanel: PropTypes.func.isRequired,
-  changeCurrencyCollection: PropTypes.func.isRequired,
+  changeRatioTableCurrencies: PropTypes.func.isRequired,
+  changeWidgetHeadCurrency: PropTypes.func.isRequired,
+  changeRatioPanelCurrencies: PropTypes.func.isRequired,
 };
 
 export default Main;

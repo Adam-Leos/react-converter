@@ -15,22 +15,20 @@ class RatioWidget extends React.Component {
     this.props.toggleRatioPanel();
   }
 
-  // TODO just remove unneeded currency, not create new array
   toggleRatioVisibility = (triggeredCheckbox) => {
-    const ratioCheckboxes = document.querySelectorAll('.j-ratio-checkbox:checked');
-    const newCurrenciesArray = [];
-
-    ratioCheckboxes.forEach(ratioCheckbox => newCurrenciesArray.push(ratioCheckbox.value));
-
-    this.props.changeCurrencyCollection(newCurrenciesArray);
+    if (triggeredCheckbox.checked) {
+      this.props.changeRatioTableCurrencies(undefined, triggeredCheckbox.value);
+    } else {
+      this.props.changeRatioTableCurrencies(triggeredCheckbox.value);
+    }
   }
 
   render() {
     const {
       isPanelOpen,
-      widgetCurrency,
-      currenciesCollection,
-      ratioPanelCurrencies,
+      ratioWidgetHeadCurrency,
+      ratioTableCurrenciesCollection,
+      ratioPanelCurrenciesCollection,
     } = this.props.ratioWidget;
 
     return (
@@ -40,14 +38,14 @@ class RatioWidget extends React.Component {
             <tr className="ratio-widget__row">
               <th colSpan="2" className="ratio-widget__data ratio-widget__data--head">
                 Current ratio of &nbsp;
-                <span className="j-ratio-widget-currency">USD</span>
+                <span className="j-ratio-widget-currency">{ratioWidgetHeadCurrency}</span>
                 <span role="button" tabIndex={0} className={`ratio-widget__arrow j-toggle-ratio-panel ${isPanelOpen ? 'active' : ''}`} onClick={this.toggleRatioPanel} />
               </th>
             </tr>
           </thead>
           <tbody className="ratio-widget__body j-ratio-widget-body">
-            {currenciesCollection.map((currency, index) => {
-              const currencyRatio = GetCurrencyRatio(widgetCurrency);
+            {ratioTableCurrenciesCollection.map((currency, index) => {
+              const currencyRatio = GetCurrencyRatio(ratioWidgetHeadCurrency);
               const upperCaseCurrency = currency.toUpperCase();
 
               return (
@@ -59,7 +57,7 @@ class RatioWidget extends React.Component {
               );
             })}
           </tbody>
-          <tfoot className="ratio-widget__foot j-ratio-widget-foot hidden">
+          <tfoot className={`ratio-widget__foot ${ratioTableCurrenciesCollection.length > 0 ? 'hidden' : ''}`}>
             <tr className="ratio-widget__row">
               <td colSpan="2" className="ratio-widget__data">
                 There is nothing to show. Please, select some more currency to show.
@@ -68,7 +66,7 @@ class RatioWidget extends React.Component {
           </tfoot>
         </table>
         <div className={`ratio-widget__panel j-ratio-panel ${isPanelOpen ? 'active' : ''}`}>
-          {ratioPanelCurrencies.map((currency, index) => {
+          {ratioPanelCurrenciesCollection.map((currency, index) => {
             const upperCaseCurrency = currency.toUpperCase();
 
             return (
@@ -88,12 +86,12 @@ class RatioWidget extends React.Component {
 RatioWidget.propTypes = {
   ratioWidget: PropTypes.shape({
     isPanelOpen: PropTypes.bool.isRequired,
-    widgetCurrency: PropTypes.string.isRequired,
-    currenciesCollection: PropTypes.arrayOf(PropTypes.string).isRequired,
-    ratioPanelCurrencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+    ratioWidgetHeadCurrency: PropTypes.string.isRequired,
+    ratioTableCurrenciesCollection: PropTypes.arrayOf(PropTypes.string).isRequired,
+    ratioPanelCurrenciesCollection: PropTypes.arrayOf(PropTypes.string).isRequired,
   }).isRequired,
   toggleRatioPanel: PropTypes.func.isRequired,
-  changeCurrencyCollection: PropTypes.func.isRequired,
+  changeRatioTableCurrencies: PropTypes.func.isRequired,
 };
 
 export default RatioWidget;

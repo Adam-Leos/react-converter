@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class ConverterFeild extends React.Component {
   constructor(props) {
@@ -21,7 +22,7 @@ class ConverterFeild extends React.Component {
   };
 
   render() {
-    const currenciesCollection = ['USD', 'RUB', 'EUR', 'GBR', 'JPY'];
+    const allAvailableCurenciesCollection = ['USD', 'RUB', 'EUR', 'GBP', 'JPY'];
 
     return (
       <div className="converter__box">
@@ -40,7 +41,7 @@ class ConverterFeild extends React.Component {
           name="currency"
           onChange={this.onCurrencyInput}
         >
-          {currenciesCollection.map(currency => (
+          {allAvailableCurenciesCollection.map(currency => (
             <option value={currency} key={currency}>{currency}</option>
           ))}
         </select>
@@ -48,5 +49,9 @@ class ConverterFeild extends React.Component {
     );
   }
 }
+
+ConverterFeild.propTypes = {
+  type: PropTypes.string.isRequired,
+};
 
 export default ConverterFeild;
