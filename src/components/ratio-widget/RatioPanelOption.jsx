@@ -7,9 +7,9 @@ function RatioPanelOption(props) {
       <input
         type="checkbox"
         onChange={props.onChange}
-        className="ratio-widget__checkbox j-ratio-checkbox"
+        className="ratio-widget__checkbox"
         name={props.upperCaseCurrency}
-        value={props.upperCaseCurrency} 
+        value={props.upperCaseCurrency}
         defaultChecked
       />
       {props.upperCaseCurrency}

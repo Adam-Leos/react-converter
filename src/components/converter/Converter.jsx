@@ -58,7 +58,7 @@ class Converter extends React.Component {
         <ConverterFeild type="calculated" />
         <button
           type="button"
-          className="converter__button j-convert-currency"
+          className="converter__button"
           onClick={this.onConvertCurrencyClick}
         >
           Convert

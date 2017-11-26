@@ -5,7 +5,6 @@ import RatioPanelOption from './RatioPanelOption.jsx';
 import RatioWidgetRow from './RatioWidgetRow.jsx';
 import GetCurrencyRatio from '../../utils/GetCurrencyRatio';
 
-// TODO use templates for html
 class RatioWidget extends React.Component {
   onRatioCheckboxChange = (event) => {
     this.toggleRatioVisibility(event.target);
@@ -39,12 +38,12 @@ class RatioWidget extends React.Component {
               <th colSpan="2" className="ratio-widget__data ratio-widget__data--head">
                 Current ratio of &nbsp;
                 <span className="j-ratio-widget-currency">{ratioWidgetHeadCurrency}</span>
-                <span role="button" tabIndex={0} className={`ratio-widget__arrow j-toggle-ratio-panel ${isPanelOpen ? 'active' : ''}`} onClick={this.toggleRatioPanel} />
+                <span role="button" tabIndex={0} className={`ratio-widget__arrow ${isPanelOpen ? 'active' : ''}`} onClick={this.toggleRatioPanel} />
               </th>
             </tr>
           </thead>
-          <tbody className="ratio-widget__body j-ratio-widget-body">
-            {ratioTableCurrenciesCollection.map((currency, index) => {
+          <tbody className="ratio-widget__body">
+            {ratioTableCurrenciesCollection.map((currency) => {
               const currencyRatio = GetCurrencyRatio(ratioWidgetHeadCurrency);
               const upperCaseCurrency = currency.toUpperCase();
 
@@ -65,8 +64,8 @@ class RatioWidget extends React.Component {
             </tr>
           </tfoot>
         </table>
-        <div className={`ratio-widget__panel j-ratio-panel ${isPanelOpen ? 'active' : ''}`}>
-          {ratioPanelCurrenciesCollection.map((currency, index) => {
+        <div className={`ratio-widget__panel ${isPanelOpen ? 'active' : ''}`}>
+          {ratioPanelCurrenciesCollection.map((currency) => {
             const upperCaseCurrency = currency.toUpperCase();
 
             return (
