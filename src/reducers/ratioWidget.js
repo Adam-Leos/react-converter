@@ -1,18 +1,25 @@
+import {
+  TOGGLE_RATIO_PANEL,
+  CHANGE_WIDGET_HEAD_CURRENCY,
+  CHANGE_RATIO_TABLE_CURRENCIES,
+  CHANGE_RATIO_PANEL_CURRENCIES,
+} from './../actions/actionTypes';
+
 function ratioWidget(state = [], action) {
   switch (action.type) {
-    case 'TOGGLE_RATIO_PANEL':
+    case TOGGLE_RATIO_PANEL:
       return {
         ...state,
         isPanelOpen: !state.isPanelOpen,
       };
 
-    case 'CHANGE_WIDGET_HEAD_CURRENCY':
+    case CHANGE_WIDGET_HEAD_CURRENCY:
       return {
         ...state,
         ratioWidgetHeadCurrency: action.newWidgetCurrency,
       };
 
-    case 'CHANGE_RATIO_TABLE_CURRENCIES': {
+    case CHANGE_RATIO_TABLE_CURRENCIES: {
       const currencyToRemove = action.currencyToRemove;
       const currencyToAdd = action.currencyToAdd;
       const newCurrenciesCollection = state.ratioTableCurrenciesCollection;
@@ -35,7 +42,7 @@ function ratioWidget(state = [], action) {
       };
     }
 
-    case 'CHANGE_RATIO_PANEL_CURRENCIES': {
+    case CHANGE_RATIO_PANEL_CURRENCIES: {
       const newCurrenciesCollection = state.ratioPanelCurrenciesCollection;
       const oldCurrencyPosition = newCurrenciesCollection.indexOf(action.newCurrency);
 
